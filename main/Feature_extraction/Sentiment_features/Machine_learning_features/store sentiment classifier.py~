@@ -27,8 +27,8 @@ from sklearn.metrics import accuracy_score
 
 
 # 1. Load positive and negative review data
-pos_review = tp.seg_fil_senti_excel("D:/code/sentiment_test/pos_review.xlsx", 1, 1)
-neg_review = tp.seg_fil_senti_excel("D:/code/sentiment_test/neg_review.xlsx", 1, 1)
+pos_review = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/pos_review.xlsx", 1, 1)
+neg_review = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/neg_review.xlsx", 1, 1)
 
 pos = pos_review
 neg = neg_review
@@ -69,8 +69,8 @@ def bigram_words(words, score_fn=BigramAssocMeasures.chi_sq, n=200):
 # 2.4 Use chi_sq to find most informative features of the review
 # 2.4.1 First we should compute words or bigrams information score
 def create_word_scores():
-    posdata = tp.seg_fil_senti_excel("D:/code/sentiment_test/pos_review.xlsx", 1, 1)
-    negdata = tp.seg_fil_senti_excel("D:/code/sentiment_test/neg_review.xlsx", 1, 1)
+    posdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/pos_review.xlsx", 1, 1)
+    negdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/neg_review.xlsx", 1, 1)
     
     posWords = list(itertools.chain(*posdata))
     negWords = list(itertools.chain(*negdata))
@@ -97,8 +97,8 @@ def create_word_scores():
     return word_scores
 
 def create_bigram_scores():
-    posdata = tp.seg_fil_senti_excel("D:/code/sentiment_test/pos_review.xlsx", 1, 1)
-    negdata = tp.seg_fil_senti_excel("D:/code/sentiment_test/neg_review.xlsx", 1, 1)
+    posdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/pos_review.xlsx", 1, 1)
+    negdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/neg_review.xlsx", 1, 1)
     
     posWords = list(itertools.chain(*posdata))
     negWords = list(itertools.chain(*negdata))
@@ -134,8 +134,8 @@ def create_bigram_scores():
 
 # Combine words and bigrams and compute words and bigrams information scores
 def create_word_bigram_scores():
-    posdata = tp.seg_fil_senti_excel("D:/code/sentiment_test/pos_review.xlsx", 1, 1)
-    negdata = tp.seg_fil_senti_excel("D:/code/sentiment_test/neg_review.xlsx", 1, 1)
+    posdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/pos_review.xlsx", 1, 1)
+    negdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/neg_review.xlsx", 1, 1)
     
     posWords = list(itertools.chain(*posdata))
     negWords = list(itertools.chain(*negdata))

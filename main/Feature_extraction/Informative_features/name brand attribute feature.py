@@ -10,9 +10,9 @@ This module aim to extract product name, brand and attribute features.
 import textprocessing as tp
 
 # Read txt files include product name, product brand and product attributes
-name = tp.get_txt_data("D:/code/product_name.txt", "lines")
-brand = tp.get_txt_data("D:/code/product_brand.txt", "lines")
-attribute = tp.get_txt_data("D:/code/product_attribute", "lines")
+name = tp.get_txt_data("/home/sooda/nlp/Review-Helpfulness-Prediction/data/name.txt", "lines")
+brand = tp.get_txt_data("/home/sooda/nlp/Review-Helpfulness-Prediction/data/brand.txt", "lines")
+attribute = tp.get_txt_data("/home/sooda/nlp/Review-Helpfulness-Prediction/data/attribute", "lines")
 
 # Function counting feature appearing times
 def name_brand_attribute(dataset):

@@ -7,10 +7,13 @@ This module aim to bulid review ngram language model then compute review entropy
 
 """
 
+import sys
+sys.path.append("/home/sooda/nlp/Review-Helpfulness-Prediction/main/Preprocessing/")
 import textprocessing as tp
 import itertools
 import nltk
-from nltk.model.ngram import NgramModel
+#from nltk.util.ngram import NgramModel
+from nltk.util import ngrams as  NgramModel
 
 
 # Function of reading excel file contain review data and filtering stopwords, then return a list of review words
@@ -19,10 +22,10 @@ def word_by_word_review(filepath, sheetnum, colnum):
     review_data = []
     for cell in tp.get_excel_data(filepath, sheetnum, colnum, 'data')[0:get_excel_data(filepath, sheetnum, colnum, 'rownum')]:
         review_data.append(tp.segmentation(cell, 'list')) # Seg every reivew
-    
+
     # Read txt file contain stopwords
-    stopwords = tp.get_txt_data('D:/code/stopword.txt', 'lines')
- 
+    stopwords = tp.get_txt_data('/home/sooda/nlp/Review-Helpfulness-Prediction/data/stopword.txt', 'lines')
+
     # Filter stopwords from reviews
     seg_fil_result = []
     for review in review_data:

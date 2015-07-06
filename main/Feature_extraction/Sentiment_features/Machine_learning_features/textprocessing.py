@@ -1,7 +1,7 @@
 #! /usr/bin/env python2.7
 #coding=utf-8
 
-""" 
+"""
 Read data from excel file and txt file.
 Chinese word segmentation, postagger, sentence cutting and stopwords filtering function.
 
@@ -10,7 +10,7 @@ Chinese word segmentation, postagger, sentence cutting and stopwords filtering f
 import xlrd
 import jieba
 import jieba.posseg
-jieba.load_userdict('E:/Python27/Lib/site-packages/jieba-0.31/jieba/userdict.txt') #Load user dictionary to increse segmentation accuracy
+jieba.load_userdict('/home/sooda/nlp/Review-Helpfulness-Prediction/data/userdict.txt') #Load user dictionary to increse segmentation accuracy
 
 
 """
@@ -26,6 +26,8 @@ output:
 """
 def get_excel_data(filepath, sheetnum, colnum, para):
     table = xlrd.open_workbook(filepath)
+    print filepath
+    print sheetnum
     sheet = table.sheets()[sheetnum-1]
     data = sheet.col_values(colnum-1)
     rownum = sheet.nrows
@@ -169,15 +171,15 @@ input: An excel file with product reviews
 output: A multidimentional list of reviews
 
 """
- 
+
 def seg_fil_excel(filepath, sheetnum, colnum):
     # Read product review data from excel file and segment every review
     review_data = []
     for cell in get_excel_data(filepath, sheetnum, colnum, 'data')[0:get_excel_data(filepath, sheetnum, colnum, 'rownum')]:
         review_data.append(segmentation(cell, 'list')) # Seg every reivew
-    
+
     # Read txt file contain stopwords
-    stopwords = get_txt_data('D:/code/stopword.txt', 'lines')
+    stopwords = get_txt_data('/home/sooda/nlp/Review-Helpfulness-Prediction/data/stopword.txt', 'lines')
 
     # Filter stopwords from reviews
     seg_fil_result = []
@@ -185,7 +187,7 @@ def seg_fil_excel(filepath, sheetnum, colnum):
         fil = [word for word in review if word not in stopwords and word != ' ']
         seg_fil_result.append(fil)
         fil = []
- 
+
     # Return filtered segment reviews
     return seg_fil_result
 
@@ -205,16 +207,16 @@ def seg_fil_senti_excel(filepath, sheetnum, colnum):
     review_data = []
     for cell in get_excel_data(filepath, sheetnum, colnum, 'data')[0:get_excel_data(filepath, sheetnum, colnum, 'rownum')]:
         review_data.append(segmentation(cell, 'list')) # Seg every reivew
-    
+
     # Read txt file contain sentiment stopwords
-    sentiment_stopwords = get_txt_data('D:/code/seniment_test/sentiment_stopword.txt', 'lines')
- 
+    sentiment_stopwords = get_txt_data('/home/sooda/nlp/Review-Helpfulness-Prediction/data/seniment_test/sentiment_stopword.txt', 'lines')
+
     # Filter stopwords from reviews
     seg_fil_senti_result = []
     for review in review_data:
         fil = [word for word in review if word not in sentiment_stopwords and word != ' ']
         seg_fil_senti_result.append(fil)
         fil = []
- 
+
     # Return filtered segment reviews
     return seg_fil_senti_result

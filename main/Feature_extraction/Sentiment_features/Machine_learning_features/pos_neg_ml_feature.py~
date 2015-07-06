@@ -22,7 +22,7 @@ import sklearn
 
 
 # 1. Load data
-review = tp.get_excel_data("D:/code/sentiment_test/review_set.xlsx", "1", "1", "data")
+review = tp.get_excel_data("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/review_set.xlsx", "1", "1", "data")
 sentiment_review = tp.seg_fil_senti_excel("D:/code/sentiment_test/review_set.xlsx", "1", "1")
 
 
