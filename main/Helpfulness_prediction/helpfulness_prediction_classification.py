@@ -30,7 +30,7 @@ def read_data(datapath):
 	data = np.loadtxt(f)
 	return data
 
-data = read_data("D:/code/machine learning/feature.txt")
+data = read_data("/home/sooda/nlp/Review-Helpfulness-Prediction/data/feature.txt")
 shuffle(data) # Make data ramdon
 
 helpfulness_target = data[:, 0 ] # First column of the dataset is review helpfulness label
@@ -91,14 +91,14 @@ clf = svm.SVC(gamma=0.001, C=100.)
 
 
 # 4. Cross validate classifier's accuracy
-k_fold = cross_validation.KFold(len(helpfulness_feature), n_folds=10)
-clf_accuracy = cross_validation.cross_val_score(clf, x, y, cv=k_fold)
-print clf_accuracy.mean()
+#k_fold = cross_validation.KFold(len(helpfulness_feature), n_folds=10)
+#clf_accuracy = cross_validation.cross_val_score(clf, x, y, cv=k_fold)
+#print clf_accuracy.mean()
 
 
 # 5. Cross validate for all metrics, include precision, recall and f1 measure (macro, micro)
 def metric_evaluation(feature, target):
-	k_fold = cross_validation.KFold(len(feature), k=10) # 10-fold cross validation
+	k_fold = cross_validation.KFold(len(feature), n_folds=10) # 10-fold cross validation
 
 	metric = []
 	for train, test in k_fold:

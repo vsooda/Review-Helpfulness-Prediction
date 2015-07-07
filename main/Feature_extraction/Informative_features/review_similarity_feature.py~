@@ -59,7 +59,7 @@ def seg_filter_txt(filepath, storepath):
 
     review_data = tp.segmentation(txtdata[0], 'list')
 
-    stopfile = open('/home/sooda/nlp/Review-Helpfulness-Prediction/data/stopword.txt', 'r')
+    stopfile = open('D:/code/seg_fil_test/stopword.txt', 'r')
     stopdata1 = stopfile.readlines()
     stopdata2 = ''.join(stopdata1)
     stopwords = stopdata2.decode('utf8').split('\n')
