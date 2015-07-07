@@ -90,10 +90,11 @@ def extract_features(dataset):
 
 
 # 4. Load classifier
-clf = pickle.load(open('/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/sentiment_classifier.pkl'))
+#clf = pickle.load(open('/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/sentiment_classifier.pkl'))
+clf = pickle.load(open('clf.pkl'))
 
 # Testing single review
-pred = clf.batch_prob_classify(extract_features(sentiment_review[:2])) # An object contian positive and negative probabiliy
+pred = clf.prob_classify_many(extract_features(sentiment_review[:2])) # An object contian positive and negative probabiliy
 
 pred2 = []
 for i in pred:
@@ -108,7 +109,7 @@ for r in review[:2]:
 
 # 5. Store review sentiment probabilty socre as review helpfulness features
 def store_sentiment_prob_feature(sentiment_dataset, storepath):
-	pred = clf.batch_prob_classify(extract_features(sentiment_dataset))
+	pred = clf.prob_classify_many(extract_features(sentiment_dataset))
 	p_file = open(storepath, 'w')
 	for i in pred:
 	    p_file.write(str(i.prob('pos')) + ' ' + str(i.prob('neg')) + '\n')

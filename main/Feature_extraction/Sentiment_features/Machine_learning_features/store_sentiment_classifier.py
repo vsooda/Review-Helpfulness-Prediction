@@ -71,18 +71,18 @@ def bigram_words(words, score_fn=BigramAssocMeasures.chi_sq, n=200):
 def create_word_scores():
     posdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/pos_review.xlsx", 1, 1)
     negdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/neg_review.xlsx", 1, 1)
-    
+
     posWords = list(itertools.chain(*posdata))
     negWords = list(itertools.chain(*negdata))
 
     word_fd = FreqDist()
     cond_word_fd = ConditionalFreqDist()
     for word in posWords:
-        word_fd.inc(word)
-        cond_word_fd['pos'].inc(word)
+        word_fd[word] += 1
+        cond_word_fd['pos'][word] += 1
     for word in negWords:
-        word_fd.inc(word)
-        cond_word_fd['neg'].inc(word)
+        word_fd[word] += 1
+        cond_word_fd['neg'][word] += 1
 
     pos_word_count = cond_word_fd['pos'].N()
     neg_word_count = cond_word_fd['neg'].N()
@@ -99,7 +99,7 @@ def create_word_scores():
 def create_bigram_scores():
     posdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/pos_review.xlsx", 1, 1)
     negdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/neg_review.xlsx", 1, 1)
-    
+
     posWords = list(itertools.chain(*posdata))
     negWords = list(itertools.chain(*negdata))
 
@@ -113,12 +113,18 @@ def create_bigram_scores():
 
     word_fd = FreqDist()
     cond_word_fd = ConditionalFreqDist()
-    for word in pos:
-        word_fd.inc(word)
-        cond_word_fd['pos'].inc(word)
-    for word in neg:
-        word_fd.inc(word)
-        cond_word_fd['neg'].inc(word)
+    #for word in pos:
+    #    word_fd.inc(word)
+    #    cond_word_fd['pos'].inc(word)
+    #for word in neg:
+    #    word_fd.inc(word)
+    #    cond_word_fd['neg'].inc(word)
+    for word in posWords:
+        word_fd[word] += 1
+        cond_word_fd['pos'][word] += 1
+    for word in negWords:
+        word_fd[word] += 1
+        cond_word_fd['neg'][word] += 1
 
     pos_word_count = cond_word_fd['pos'].N()
     neg_word_count = cond_word_fd['neg'].N()
@@ -136,7 +142,7 @@ def create_bigram_scores():
 def create_word_bigram_scores():
     posdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/pos_review.xlsx", 1, 1)
     negdata = tp.seg_fil_senti_excel("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/neg_review.xlsx", 1, 1)
-    
+
     posWords = list(itertools.chain(*posdata))
     negWords = list(itertools.chain(*negdata))
 
@@ -150,12 +156,18 @@ def create_word_bigram_scores():
 
     word_fd = FreqDist()
     cond_word_fd = ConditionalFreqDist()
-    for word in pos:
-        word_fd.inc(word)
-        cond_word_fd['pos'].inc(word)
-    for word in neg:
-        word_fd.inc(word)
-        cond_word_fd['neg'].inc(word)
+    #for word in pos:
+    #    word_fd.inc(word)
+    #    cond_word_fd['pos'].inc(word)
+    #for word in neg:
+    #    word_fd.inc(word)
+    #    cond_word_fd['neg'].inc(word)
+    for word in posWords:
+        word_fd[word] += 1
+        cond_word_fd['pos'][word] += 1
+    for word in negWords:
+        word_fd[word] += 1
+        cond_word_fd['neg'][word] += 1
 
     pos_word_count = cond_word_fd['pos'].N()
     neg_word_count = cond_word_fd['neg'].N()
@@ -170,7 +182,7 @@ def create_word_bigram_scores():
     return word_scores
 
 # Choose word_scores extaction methods
-# word_scores = create_word_scores()
+word_scores = create_word_scores()
 # word_scores = create_bigram_scores()
 # word_scores = create_word_bigram_scores()
 
@@ -249,11 +261,11 @@ def clf_score(classifier):
     classifier = SklearnClassifier(classifier)
     classifier.train(train_set)
 
-    predict = classifier.batch_classify(test)
+    predict = classifier.classify_many(test)
     return accuracy_score(tag_test, predict)
 
 print 'BernoulliNB`s accuracy is %f' %clf_score(BernoulliNB())
-print 'GaussianNB`s accuracy is %f' %clf_score(GaussianNB())
+#print 'GaussianNB`s accuracy is %f' %clf_score(GaussianNB())
 print 'MultinomiaNB`s accuracy is %f' %clf_score(MultinomialNB())
 print 'LogisticRegression`s accuracy is %f' %clf_score(LogisticRegression())
 print 'SVC`s accuracy is %f' %clf_score(SVC(gamma=0.001, C=100., kernel='linear'))
@@ -267,10 +279,12 @@ def score(classifier):
     classifier = SklearnClassifier(classifier)
     classifier.train(trainset)
 
-    pred = classifier.batch_classify(test)
+    #pred = classifier.batch_classify(test)
+    pred = classifier.classify_many(test)
     return accuracy_score(tag_test, pred)
 
-dimention = ['500','1000','1500','2000','2500','3000']
+#dimention = ['500','1000','1500','2000','2500','3000']
+dimention = ['500','1000']
 
 for d in dimention:
     word_scores = create_word_bigram_scores()
@@ -298,7 +312,6 @@ for d in dimention:
     print 'SVC`s accuracy is %f' %score(SVC())
     print 'LinearSVC`s accuracy is %f' %score(LinearSVC())
     print 'NuSVC`s accuracy is %f' %score(NuSVC())
-    print 
 
 
 
@@ -308,3 +321,5 @@ def store_classifier(clf, trainset, filepath):
     classifier.train(trainset)
     # use pickle to store classifier
     pickle.dump(classifier, open(filepath,'w'))
+
+store_classifier(MultinomialNB(), trainset, "clf.pkl")
