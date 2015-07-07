@@ -27,7 +27,8 @@ insufficientdict = tp.get_txt_data('/home/sooda/nlp/Review-Helpfulness-Predictio
 inversedict = tp.get_txt_data('/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_dictionary/inverse.txt', 'lines')
 
 # Load dataset
-review = tp.get_excel_data("/home/sooda/nlp/Review-Helpfulness-Prediction/data/review_set.xlxs", "1", "1", "data")
+#review = tp.get_excel_data("/home/sooda/nlp/Review-Helpfulness-Prediction/data/review_set.xlxs", "1", "1", "data")
+review = tp.get_excel_data("/home/sooda/nlp/Review-Helpfulness-Prediction/data/sentiment_test/review_set.xlsx", 1, 1, "data")
 
 
 # 2. Sentiment dictionary analysis basic function
@@ -112,7 +113,7 @@ def single_review_sentiment_score(review):
 		            	break
 		            elif w2 in negdict:
 		                negcount += 2
-		                break                    
+		                break
 		    i += 1
 
 		single_review_senti_score.append(transform_to_positive_num(poscount, negcount))
@@ -142,7 +143,7 @@ def sentence_sentiment_score(dataset):
             negcount = 0
             for word in seg_sent:
                 if word in posdict:
-                    poscount += 1                
+                    poscount += 1
                     for w in seg_sent[a:i]:
                        poscount = match(w, poscount)
                     a = i + 1
@@ -160,12 +161,12 @@ def sentence_sentiment_score(dataset):
                         	break
                         elif w2 in negdict:
                             negcount += 2
-                            break                    
+                            break
                 i += 1
-                
+
             single_review_count.append(transform_to_positive_num(poscount, negcount)) #[[s1_score], [s2_score], ...]
         all_review_count.append(single_review_count) # [[[s11_score], [s12_score], ...], [[s21_score], [s22_score], ...], ...]
-        single_review_count = []    
+        single_review_count = []
 
     return all_review_count
 
